@@ -4,6 +4,7 @@ import type { TabsProps } from 'antd';
 import styles from "./NotificationPage.module.scss"
 import TableComponent from "../TableComponent/TableComponent";
 import {ColumnsType} from "antd/es/table";
+import {useSelector} from "react-redux";
 
 const onChange = (key: string) => {
     console.log(key);
@@ -160,9 +161,10 @@ const items: TabsProps['items'] = [
 ];
 
 const NotificationPage: React.FC = () => {
+    const windowWidth = useSelector((state: any) => state.screen.width)
     return (
         <div className={styles.Wrapper}>
-            <Tabs defaultActiveKey="1" size={"large"} items={items} tabPosition={"left"} onChange={onChange} />
+            <Tabs defaultActiveKey="1" size={windowWidth > 500 ? "large" : "small"} items={items} tabPosition={windowWidth > 768 ? "left" : "top"} onChange={onChange} />
         </div>
     )
 };
