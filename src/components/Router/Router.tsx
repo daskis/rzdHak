@@ -8,6 +8,8 @@ import Outlet from "../Outlet/Outlet";
 import ChangesPage from "../../pages/ChangesPage/ChangesPage";
 import styles from "./Router.module.scss"
 import NotificationPage from "../../pages/NotificationPage/NotificationPage";
+import StationPage from "../../pages/StationPage/StationPage";
+import TicketsPage from "../../pages/TicketsPage/TicketsPage";
 export const routerLinks = [
     {
         label: "Главная",
@@ -43,6 +45,16 @@ export const routerLinks = [
         label: "Изменения маршрутов",
         link: "/changes",
         element: <ChangesPage/>
+    },
+    {
+        label: "Станция",
+        link: "/station/:stationId",
+        element: <StationPage/>
+    },
+    {
+        label: "Билеты",
+        link: "/tickets",
+        element: <TicketsPage/>
     },
 ]
 const AppContent = () => {

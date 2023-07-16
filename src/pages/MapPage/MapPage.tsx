@@ -1,10 +1,14 @@
 import * as React from "react";
 import mapboxgl from "mapbox-gl";
+import ReactDOMServer from "react-dom/server";
 import "mapbox-gl/dist/mapbox-gl.css";
 import SelectComponent from "../../components/SelectComponent/SelectComponent";
-// импортируем стили mapbox-gl чтобы карта отображалась коррекно
+import {Button, Typography} from "antd";
+import {Link, BrowserRouter} from "react-router-dom";
+
 const routes = [
     {
+        stationId: 1,
         name: "msk-adl",
         coordinates: [
             [54.62907498969296, 39.70110112172397],
@@ -20,47 +24,54 @@ const routes = [
             [43.91507978057659, 39.3203102240886],
             [43.593869921385924, 39.72810603179891],
             [43.511959520147784, 39.86379257612086],
-            [43.447729167898025, 39.904162196490034],
+            [43.447729167898025, 39.904162196490034]
         ]
     }
-]
+];
+
+const CustomPopupContent = ({stationId, name}: { stationId: number, name: string }) => {
+    return (
+        <BrowserRouter>
+            <div>
+                <Typography.Title level={3}>{name}</Typography.Title>
+                <Typography.Text>Кол-во свободных вагонов:
+                    <span style={{fontSize: "1.2em", fontWeight: 500}}>6</span>
+                </Typography.Text>
+                <Link to={`/station/${stationId}`}>
+                    <Button type={"primary"}>Показать подробнее</Button>
+                </Link>
+            </div>
+        </BrowserRouter>
+    );
+};
 
 function MapPage() {
-    // здесь будет хранится инстанс карты после инициализации
     const [map, setMap] = React.useState<mapboxgl.Map>();
-
-    // React ref для хранения ссылки на DOM ноду который будет
-    // использоваться как обязательный параметр `container`
-    // при инициализации карты `mapbox-gl`
-    // по-умолчанию будет содержать `null`
     const mapNode = React.useRef(null);
     const options = [
         {
-            value: 'msk-adl',
-            label: 'Москва — Адлер',
+            value: "msk-adl",
+            label: "Москва — Адлер"
         },
         {
-            value: 'msk-bel',
-            label: 'Москва — Белгород',
+            value: "msk-bel",
+            label: "Москва — Белгород"
         },
         {
-            value: 'msk-spb',
-            label: 'Москва — Санкт-Петербург',
-        },
-    ]
+            value: "msk-spb",
+            label: "Москва — Санкт-Петербург"
+        }
+    ];
+
     React.useEffect(() => {
         const node = mapNode.current;
-        // если объект window не найден,
-        // то есть компонент рендерится на сервере
-        // или dom node не инициализирована, то ничего не делаем
         if (typeof window === "undefined" || node === null) return;
 
-        // иначе создаем инстанс карты передавая ему ссылку на DOM ноду
-        // а также accessToken для mapbox
         const mapboxMap = new mapboxgl.Map({
             minZoom: 5,
             container: node,
-            accessToken: "pk.eyJ1IjoicGxhbmVtYWQiLCJhIjoiemdYSVVLRSJ9.g3lbg_eN0kztmsfIPxa9MQ",
+            accessToken:
+                "pk.eyJ1IjoicGxhbmVtYWQiLCJhIjoiemdYSVVLRSJ9.g3lbg_eN0kztmsfIPxa9MQ",
             style: "mapbox://styles/planemad/ck7p3wxmp0q571imu99elwqs1",
             center: [39.0448, 45.026],
             zoom: 12,
@@ -68,26 +79,40 @@ function MapPage() {
                 language: "ru"
             }
         });
+
         if (mapboxMap) {
             routes[0].coordinates.map(item => {
-                const marker = new mapboxgl.Marker({color: "#cf1322"}).setLngLat([item[1], item[0]]).addTo(mapboxMap);
-            })
+                const marker = new mapboxgl.Marker({color: "#cf1322"})
+                    .setLngLat([item[1], item[0]])
+                    .addTo(mapboxMap);
+                marker.getElement().style.cursor = "pointer";
+                marker.getElement().addEventListener("click", () => {
+                    const popup = new mapboxgl.Popup({offset: 25})
+                        .setLngLat([item[1], item[0]])
+                        .setHTML(
+                            ReactDOMServer.renderToString(
+                                <CustomPopupContent stationId={routes[0].stationId} name="Custom Popup"/>
+                            )
+                        )
+                        .addTo(mapboxMap);
+                    marker.setPopup(popup);
+                });
+            });
         }
 
-
-        // и сохраняем созданный объект карты в React.useState
         setMap(mapboxMap);
 
-        // чтобы избежать утечки памяти удаляем инстанс карты
-        // когда компонент будет демонтирован
         return () => {
             mapboxMap.remove();
         };
     }, []);
 
-    return <div ref={mapNode} style={{width: "100%", height: "100%"}}>
-        <SelectComponent options={options} placeholder={"Выберите маршрут"} onMap={true}/>
-    </div>;
+    return (
+        <div style={{width: "100%", height: "100%", position: "relative"}}>
+            <div ref={mapNode} style={{width: "100%", height: "calc(100vh - 50px)"}}/>
+            <SelectComponent options={options} placeholder={"Выберите маршрут"} onMap={true}/>
+        </div>
+    );
 }
 
 export default MapPage;

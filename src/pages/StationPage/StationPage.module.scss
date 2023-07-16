@@ -1,0 +1,38 @@
+body {
+  overflow-x: hidden;
+}
+
+.wrapper {
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  overflow-x: hidden;
+  .title {
+    text-align: center;
+  }
+  .ant-table {
+    margin: 0 -20px;
+    overflow-x: auto;
+
+    & > .ant-table-container {
+      padding: 0 20px;
+    }
+  }
+}
+
+
+.goBack {
+  display: flex;
+  position: absolute;
+  left: 20px;
+  top: 25px;
+  gap: 4px;
+  font-size: 16px;
+  align-items: center;
+
+  & svg {
+    transform: translateY(1px);
+  }
+}

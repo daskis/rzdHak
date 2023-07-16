@@ -25,6 +25,7 @@ const SelectComponent = ({options, placeholder, onMap} : ISelect) => {
     const windowWidth = useSelector((state: any) => state.screen.width)
     return (
         <Select
+            style={{width: 150}}
             size={windowWidth > 700 ? "large" : "middle"}
             className={cn(styles.Select, {
                 [styles.absolute]: onMap,

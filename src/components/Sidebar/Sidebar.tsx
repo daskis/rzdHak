@@ -8,7 +8,7 @@ import {openHandler} from "../../features/slices/menuSlice";
 
 const links = [
     {
-        label: "Главная",
+        label: "Статистика",
         link: "/",
     },
     {
@@ -16,8 +16,12 @@ const links = [
         link: "/map",
     },
     {
-        label: "Изменения маршрутов",
-        link: "/changes",
+        label: "Уведомления",
+        link: "/notifications",
+    },
+    {
+        label: "Билеты",
+        link: "/tickets",
     },
 ]
 const Sidebar = () => {

@@ -4,9 +4,9 @@ import styles from "./ChangesPage.module.scss"
 import {ArrowRightOutlined} from "@ant-design/icons";
 import {Button, Tabs, TabsProps} from "antd";
 import {ColumnsType} from "antd/es/table";
-import TableComponent from "../TableComponent/TableComponent";
+import TableComponent from "../../components/TableComponent/TableComponent";
 import {useSelector} from "react-redux";
-import {MultiLine} from "../MultiLine/MultiLine";
+import {MultiLine} from "../../components/MultiLine/MultiLine";
 
 interface DataType {
     name: string

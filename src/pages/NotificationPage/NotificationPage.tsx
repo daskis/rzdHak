@@ -2,7 +2,7 @@ import React from 'react';
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import styles from "./NotificationPage.module.scss"
-import TableComponent from "../TableComponent/TableComponent";
+import TableComponent from "../../components/TableComponent/TableComponent";
 import {ColumnsType} from "antd/es/table";
 import {useSelector} from "react-redux";
 
