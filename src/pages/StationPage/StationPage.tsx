@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {Table, Tabs, Tag, Typography} from "antd";
 import styles from "./StationPage.module.scss"
 import {ArrowLeftOutlined} from "@ant-design/icons";
 import type {TabsProps} from 'antd';
+import {useGetStationInfoQuery} from "../../features/api/stationApi";
 
 const {TabPane} = Tabs;
 const StationPage = () => {
@@ -312,7 +313,13 @@ const StationPage = () => {
     }
     const {stationId} = useParams()
     const navigate = useNavigate()
-
+    // @ts-ignore
+    // const { data, error, endpointName, isLoading } = useGetStationInfoQuery(stationId)
+    //
+    // useEffect(() => {
+    //     console.log(endpointName)
+    //     console.log(data, error, isLoading)
+    // }, [])
 
     const onChange = (key: string) => {
         console.log(key);
@@ -479,7 +486,7 @@ const StationPage = () => {
                         ]}
                     />
                 </TabPane>
-                <TabPane tab="Доступные вагоны" key="3">
+                <TabPane tab="Доступные поезда" key="3">
                     <Table
                         dataSource={trainData}
                         scroll={{x: 600}}

@@ -1,9 +1,12 @@
 import React from 'react';
 import {Column} from "@ant-design/charts";
+import {useGetFlightsQuery} from "../../../features/api/statisticApi";
 
 const Flights = () => {
+    // @ts-ignore
+    const {data, error, isLoading} = useGetFlightsQuery()
 
-    const data = [
+    const flightsData = [
         { type: "01.01.2023", value: 548 },
         { type: "02.01.2023", value: 327 },
         { type: "03.01.2023", value: 689 },
@@ -36,7 +39,7 @@ const Flights = () => {
         { type: "30.01.2023", value: 894 },
     ];
     const config = {
-        data,
+        data: flightsData,
         xField: 'type',
         yField: 'value',
         label: {

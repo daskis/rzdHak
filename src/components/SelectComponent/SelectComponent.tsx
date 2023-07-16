@@ -16,16 +16,18 @@ export interface ISelect {
     options: ISelectItem[]
     placeholder: string
     onMap: boolean
+    defaultValue: any
 }
 const onSearch = (value: string) => {
     console.log('search:', value);
 };
 
-const SelectComponent = ({options, placeholder, onMap} : ISelect) => {
+const SelectComponent = ({options, placeholder, onMap, defaultValue} : ISelect) => {
     const windowWidth = useSelector((state: any) => state.screen.width)
     return (
         <Select
-            style={{width: 150}}
+            defaultValue={defaultValue}
+            style={{width: 200}}
             size={windowWidth > 700 ? "large" : "middle"}
             className={cn(styles.Select, {
                 [styles.absolute]: onMap,

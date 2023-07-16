@@ -6,7 +6,6 @@ import {openHandler} from "../../features/slices/menuSlice";
 import Container from "../Container/Container";
 import styles from "./Header.module.scss"
 import {Badge} from "antd";
-import img from "./logo.png"
 const Header = () => {
     const dispatch = useDispatch()
     const isOpen = useSelector((state: any) => state.menu.isOpen)
@@ -14,7 +13,6 @@ const Header = () => {
         <header className={styles.Header}>
             <Container>
                 <div className={styles.wrapper}>
-                    <img className={styles.logo} src={img} alt={"Logo"}/>
                     <div className={styles.buttons}>
                         <Badge size={"small"} style={{backgroundColor: "white", color: "#000", fontWeight: 500}} count={2}>
                             <Link to={"/notifications"}

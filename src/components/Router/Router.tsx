@@ -5,7 +5,6 @@ import RegisterPage from "../../pages/RegisterPage/RegisterPage";
 import LoginPage from "../../pages/LoginPage/LoginPage";
 import MapPage from "../../pages/MapPage/MapPage";
 import Outlet from "../Outlet/Outlet";
-import ChangesPage from "../../pages/ChangesPage/ChangesPage";
 import styles from "./Router.module.scss"
 import NotificationPage from "../../pages/NotificationPage/NotificationPage";
 import StationPage from "../../pages/StationPage/StationPage";
@@ -22,11 +21,6 @@ export const routerLinks = [
         element: <MapPage/>
     },
     {
-        label: "Информация",
-        link: "/info",
-        element: <ChangesPage/>
-    },
-    {
         label: "Регистрация",
         link: "/auth/register",
         element: <RegisterPage/>
@@ -40,11 +34,6 @@ export const routerLinks = [
         label: "Уведомления",
         link: "/notifications",
         element: <NotificationPage/>
-    },
-    {
-        label: "Изменения маршрутов",
-        link: "/changes",
-        element: <ChangesPage/>
     },
     {
         label: "Станция",

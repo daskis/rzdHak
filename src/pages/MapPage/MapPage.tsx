@@ -5,6 +5,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import SelectComponent from "../../components/SelectComponent/SelectComponent";
 import {Button, Typography} from "antd";
 import {Link, BrowserRouter} from "react-router-dom";
+import {useGetMapInfoQuery} from "../../features/api/mapApi";
 
 const routes = [
     {
@@ -46,6 +47,8 @@ const CustomPopupContent = ({stationId, name}: { stationId: number, name: string
 };
 
 function MapPage() {
+    // @ts-ignore
+    const {data, error, isLoading} = useGetMapInfoQuery();
     const [map, setMap] = React.useState<mapboxgl.Map>();
     const mapNode = React.useRef(null);
     const options = [
@@ -53,14 +56,6 @@ function MapPage() {
             value: "msk-adl",
             label: "Москва — Адлер"
         },
-        {
-            value: "msk-bel",
-            label: "Москва — Белгород"
-        },
-        {
-            value: "msk-spb",
-            label: "Москва — Санкт-Петербург"
-        }
     ];
 
     React.useEffect(() => {
@@ -110,7 +105,7 @@ function MapPage() {
     return (
         <div style={{width: "100%", height: "100%", position: "relative"}}>
             <div ref={mapNode} style={{width: "100%", height: "calc(100vh - 50px)"}}/>
-            <SelectComponent options={options} placeholder={"Выберите маршрут"} onMap={true}/>
+            <SelectComponent defaultValue={{value: "msk-adl", label: "Москва — Адлер"}} options={options} placeholder={"Выберите маршрут"} onMap={true}/>
         </div>
     );
 }

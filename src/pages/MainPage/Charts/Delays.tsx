@@ -1,8 +1,11 @@
 import React from 'react';
 import {Pie} from "@ant-design/charts";
+import {useGetDelaysQuery} from "../../../features/api/statisticApi";
 
 const Delays = () => {
-    const data = [
+    // @ts-ignore
+    const {data, error, isLoading} = useGetDelaysQuery();
+    const pieData = [
         {
             type: '< 5 минут',
             value: 924,
@@ -26,7 +29,7 @@ const Delays = () => {
     ];
     const config = {
         appendPadding: 10,
-        data,
+        data: pieData,
         angleField: 'value',
         colorField: 'type',
         radius: 1,
@@ -39,6 +42,7 @@ const Delays = () => {
             },
         ],
     };
+    // @ts-ignore
     return <Pie {...config} />;
 };
 
